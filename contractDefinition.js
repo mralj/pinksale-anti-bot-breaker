@@ -53,7 +53,7 @@ exports.antiSnipeContract = {
       type: "struct",
       fields: [
         { name: "blockoffset", type: "uint8" },
-        { name: "?", type: "uint32" },
+        { name: "?", type: "uint16" },
         { name: "block number", type: "uint32" },
         { name: "block timestamp", type: "uint64" },
       ],
