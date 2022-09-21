@@ -1,5 +1,4 @@
 const Web3 = require("web3");
-const BigNumber = require("bignumber.js");
 let web3;
 
 exports.initWeb3 = (web3Instance) => {
@@ -53,12 +52,15 @@ exports.antiSnipeContract = {
       name: "Token Config",
       type: "struct",
       fields: [
-        { name: "anti snipe enabled", type: "bool" },
-        { name: "anti block enabled", type: "number" },
-        { name: "blacklist enabled", type: "number" },
-        { name: "blacklist enabled", type: "number" },
+        { name: "blockoffset", type: "uint8" },
+        { name: "?", type: "uint32" },
+        { name: "block number", type: "uint32" },
+        { name: "block timestamp", type: "uint64" },
       ],
     },
+    { type: "map" },
+    { name: "anti block finished", type: "bool" },
+    { name: "bot count", type: "number" },
   ],
 };
 
@@ -91,12 +93,23 @@ exports.parseMemorySlot = async (contract, slotIndex) => {
 
 parseStruct = async (contractAddress, structFields, slotIndex) => {
   const result = [];
+  let slot = await web3.eth.getStorageAt(contractAddress, slotIndex);
+
+  let slot_i = 0;
   for (let i = 0; i < structFields.length; i++) {
-    let slot = await web3.eth.getStorageAt(
-      contractAddress,
-      increaseHexByOne(slotIndex + i)
+    if (slot_i >= slot.length) {
+      break;
+    }
+    result.push(
+      prettyPrintMemorySlot(
+        structFields[i],
+        `0x${slot.substring(
+          slot.length - slot_i - getStructFieldLen(structFields[i].type),
+          slot.length - slot_i
+        )}`
+      )
     );
-    result.push(prettyPrintMemorySlot(structFields[i], slot));
+    slot_i += getStructFieldLen(structFields[i].type);
   }
 
   return result;
@@ -110,11 +123,18 @@ prettyPrintMemorySlot = (memorySlotDefinition, bytes) => {
 };
 
 parseBytes = (type, bytes) => {
+  if (type.startsWith("uint")) {
+    type = "number";
+  }
   switch (type) {
     case "bool":
       return web3.utils.hexToNumber(bytes) === 1;
     case "address":
-      return web3.utils.toChecksumAddress(bytesAddressToAddress(bytes));
+      const addressBytes =
+        bytes.length === 40 || bytes.length == 42
+          ? bytes
+          : bytesAddressToAddress(bytes);
+      return web3.utils.toChecksumAddress(addressBytes);
     case "number":
       return web3.utils.hexToNumber(bytes);
     default:
@@ -135,7 +155,17 @@ bytesAddressToAddress = (bytes) => {
   return `0x${bytes.substring(totalLength - addressLength)}`;
 };
 
-increaseHexByOne = (slotIndex) =>
-  web3.utils.sha3(web3.utils.padLeft(`${slotIndex}`, 64), {
-    encoding: "hex",
-  });
+getStructFieldLen = (type) => {
+  if (type.startsWith("uint")) {
+    uintType = parseInt(type.substring(4));
+    return Math.ceil(uintType / 4);
+  }
+  switch (type) {
+    case "bool":
+      return 2;
+    case "address":
+      return 40;
+    default:
+      return 0;
+  }
+};
