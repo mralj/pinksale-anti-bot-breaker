@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/darkforestmonsters/eth-memory-reader/issues"
   },
-  "homepage": "https://github.com/darkforestmonsters/eth-memory-reader#readme"
+  "homepage": "https://github.com/darkforestmonsters/eth-memory-reader#readme",
+  "dependencies": {
+    "web3": "^1.8.0"
+  }
 }
