@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/darkforestmonsters/eth-memory-reader#readme",
   "dependencies": {
-    "bignumber.js": "^9.1.0",
     "web3": "1.8.0"
   },
   "devDependencies": {
