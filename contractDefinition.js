@@ -19,7 +19,7 @@ exports.initWeb3 = (web3Instance) => {
 
 exports.antiSnipeContract = {
   contractName: "AntiSnipe - SarabiChain",
-  contractAddress: "0x0c11c871d1d5091A43778B759E247041E6f08e9A",
+  contractAddress: "3975571f10ade161c9369651b105b4148cfbf8b9",
   memorySlotsCount: 11,
   memorySlotDefinitions: [
     {

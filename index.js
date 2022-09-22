@@ -23,3 +23,9 @@ async function getStorageAt() {
     }
   }
 }
+
+// *** HELPFUL LINKS ***
+// https://blockchain-academy.hs-mittweida.de/courses/solidity-coding-beginners-to-intermediate/lessons/solidity-12-reading-the-storage/topic/reading-the-ethereum-storage/
+// https://coinsbench.com/solidity-layout-and-access-of-storage-variables-simply-explained-1ce964d7c738
+// https://medium.com/@dariusdev/how-to-read-ethereum-contract-storage-44252c8af925
+// https://mixbytes.io/blog/collisions-solidity-storage-layouts
