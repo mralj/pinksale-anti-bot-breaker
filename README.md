@@ -30,8 +30,12 @@ https://bscscan.com/tx/0x6e5e0a5fbbc8c41811ddcc525b85c2469dcaa67ffec5a10a7b01a5d
 
 And the relevant call for sniper check is in the `finalizeTransfer` method used by token. 
 
+Enable trading call: https://bscscan.com/tx/0xc3f23e782f3a97702a62f3277e0f2ac3b1c68e7dafcfb14579ce9e56116c7f42
+
 Here is my successful buy and transfer to the selling account:
 https://bscscan.com/token/0xa3f37c4fb0c5c4cdb55b5b3adf0a40529f908228?a=0x44f7f6773b6889c9ac013ad63bf2d84a9346387b
+
+As you can see buy happened in the 0th block. 
 
 ## Anti-bot Smart contract analysis 
 For the most important part search for: `ecd07a53`
