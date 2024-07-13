@@ -3,17 +3,20 @@
 This is a small helper that reads the memory storage of PinkSale's anti-bot contract. 
 We cannot just track transactions sent to this contract as default values are set (usually not changed by token deployers) upon contract creation.
 
-This is likely outdated, by now, but at the time when launching $hitcoins on Pinksale was popular, my bot was one of the couple (if not the only) that could buy tokens having Pinksale anti-bot protections.
+This is likely outdated, by now, but at the time when launching $hitcoins on Pinksale was popular, my bot was one of the few (if not the only) that could buy tokens having Pinksale anti-bot protections.
 
 The way I broke their protections, is by reading the decompiled EVM code of their anti-bot contract. After understanding how it works, I created this helper tool, where one can just paste an anti-bot contract (each token has its own anti-bot contract - same code, it's just deployed per token basis) and get the relevant info.
+
 The way this Pinksale protection works (worked?) is as follows:
-Protections are OFF after N blocks
-If you are buying in [0, N] blocks, you are maybe bot
-If you try to transfer tokens multiple times in the same block (during those first N blocks), you are definitively bot 
-If you buy in [0, N] blocks, and sell/transfer after block N, you are a bot
+  1. Protections are OFF after N blocks
+  2. If you are buying in [0, N] blocks, you are maybe bot
+  3. If you try to transfer tokens multiple times in the same block (during those first N blocks), you are definitively bot
+  4. If you buy in [0, N] blocks, and sell/transfer after block N, you are a bot
+
 The aforementioned N was by default 2, so what one could do is 
-Buy in block 0
-Sell everything (or transfer for later sell) in blocks 1 or 2 
+  1. Buy in block 0
+  2. Sell everything (or transfer for later sell) in blocks 1 or 2 
+
 Given that you can only do this by having a bot  (albeit a really fast one), it bit ironic to call this an anti-bot measure.
 
 ## Token example
