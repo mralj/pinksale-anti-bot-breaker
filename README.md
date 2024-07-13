@@ -38,6 +38,8 @@ https://bscscan.com/token/0xa3f37c4fb0c5c4cdb55b5b3adf0a40529f908228?a=0x44f7f67
 As you can see buy happened in the 0th block. 
 
 ## Anti-bot Smart contract analysis 
+Here is what decompiled bytecode looks like (spoiler alert: like someone from hell decided to create Python to torture us).
+
 For the most important part search for: `ecd07a53`
 In the code below there are my thoughts on how most relevant parts work and what's what. 
 
